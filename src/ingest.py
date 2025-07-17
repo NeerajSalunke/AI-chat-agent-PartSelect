@@ -18,7 +18,7 @@ print("Persist path:", persist_path)
 if not os.path.exists(persist_path):
     os.makedirs(persist_path)
 
-with open("data2.json", encoding="utf-8") as f:
+with open("data.json", encoding="utf-8") as f:
     parts_data = json.load(f)
 
 chroma_client = PersistentClient(path=persist_path)
@@ -53,8 +53,11 @@ for idx, part in enumerate(parts_data):
     documents.append(part_text)
     ids.append(part["partSelect_number"])  # unique ID
     metadatas.append({  # for filtering or lookup
+        "partSelect_number": part["partSelect_number"],
         "brand": part["brand"],
-        "product_type": part["for_product"]
+        "product_description": part["product_description"],
+        "fixes_symptoms": ", ".join(part["fixes_symptoms"]) if isinstance(part["fixes_symptoms"], list) else str(part["fixes_symptoms"]),
+
     })
 
 collection.add(

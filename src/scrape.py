@@ -197,8 +197,8 @@ for url in tqdm(all_product_links):
     })
 
 
-with open("data2.json", "w", encoding='utf-8') as f:
+with open("data.json", "w", encoding='utf-8') as f:
     json.dump(scraped_data, f, indent=2, ensure_ascii=False)
 
-print(f"Scraped {len(scraped_data)} products and saved to data2.json")
+print(f"Scraped {len(scraped_data)} products and saved to data.json")
 driver.quit()
