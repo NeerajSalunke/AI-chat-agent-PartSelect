@@ -1,11 +1,27 @@
-
 export const getAIMessage = async (userQuery) => {
+  try {
+    const response = await fetch("http://localhost:8000/api/ask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ query: userQuery })
+    });
 
-  const message = 
-    {
+    const data = await response.json();
+    console.log(data);
+    console.log(data.content);
+
+    return {
       role: "assistant",
-      content: "Connect your backend here...."
-    }
+      content: data.content || "Sorry, I didn't understand that."
+    };
 
-  return message;
+  } catch (error) {
+    console.error("Error communicating with backend:", error);
+    return {
+      role: "assistant",
+      content: "Oops! Something went wrong while contacting the backend."
+    };
+  }
 };
