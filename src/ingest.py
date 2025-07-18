@@ -54,6 +54,7 @@ for idx, part in enumerate(parts_data):
     ids.append(part["partSelect_number"])  # unique ID
     metadatas.append({  # for filtering or lookup
         "partSelect_number": part["partSelect_number"],
+        "manufacturer_number": part["manufacturer_number"],
         "brand": part["brand"],
         "product_description": part["product_description"],
         "fixes_symptoms": ", ".join(part["fixes_symptoms"]) if isinstance(part["fixes_symptoms"], list) else str(part["fixes_symptoms"]),
