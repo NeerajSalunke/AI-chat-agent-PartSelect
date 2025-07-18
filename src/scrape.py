@@ -16,30 +16,6 @@ options = Options()
 options.headless = True
 driver = webdriver.Chrome()
 
-# base_category_urls = [
-#     "https://www.partselect.com/Dishwasher-Parts.htm",
-#     "https://www.partselect.com/Refrigerator-Parts.htm"
-# ]
-# category_urls = []
-
-# for base_url in base_category_urls:
-#     driver.get(base_url)
-
-#     
-#     WebDriverWait(driver, 10).until(
-#         EC.presence_of_element_located((By.CSS_SELECTOR, "ul.nf__links"))
-#     )
-
-#     soup = BeautifulSoup(driver.page_source, "html.parser")
-
-#     
-#     subcategory_links = soup.select("ul.nf__links li a")
-
-#     for a in subcategory_links:
-#         href = a.get("href")
-#         if href:
-#             category_urls.append("https://www.partselect.com" + href)
-
 all_product_links = set()
 
 category_urls = ["https://www.partselect.com/Dishwasher-Dishracks.htm", "https://www.partselect.com/Dishwasher-Wheels-and-Rollers.htm", "https://www.partselect.com/Dishwasher-Seals-and-Gaskets.htm", "https://www.partselect.com/Dishwasher-Spray-Arms.htm", "https://www.partselect.com/Dishwasher-Hardware.htm", "https://www.partselect.com/Dishwasher-Elements-and-Burners.htm", "https://www.partselect.com/Dishwasher-Pumps.htm", "https://www.partselect.com/Dishwasher-Latches.htm", "https://www.partselect.com/Dishwasher-Valves.htm", "https://www.partselect.com/Dishwasher-Racks.htm", "https://www.partselect.com/Dishwasher-Hoses-and-Tubes.htm", "https://www.partselect.com/Dishwasher-Filters.htm", "https://www.partselect.com/Dishwasher-Brackets-and-Flanges.htm", "https://www.partselect.com/Dishwasher-Hinges.htm", "https://www.partselect.com/Dishwasher-Dispensers.htm", "https://www.partselect.com/Dishwasher-Springs-and-Shock-Absorbers.htm", "https://www.partselect.com/Dishwasher-Caps-and-Lids.htm", "https://www.partselect.com/Dishwasher-Thermostats.htm", "https://www.partselect.com/Dishwasher-Switches.htm", "https://www.partselect.com/Dishwasher-Circuit-Boards-and-Touch-Pads.htm", "https://www.partselect.com/Dishwasher-Motors.htm", "https://www.partselect.com/Dishwasher-Bearings.htm", "https://www.partselect.com/Dishwasher-Sensors.htm", "https://www.partselect.com/Dishwasher-Panels.htm", "https://www.partselect.com/Dishwasher-Trays-and-Shelves.htm", "https://www.partselect.com/Dishwasher-Touch-Up-Paint.htm", "https://www.partselect.com/Dishwasher-Handles.htm", "https://www.partselect.com/Dishwasher-Drawers-and-Glides.htm", "https://www.partselect.com/Dishwasher-Grilles-and-Kickplates.htm", "https://www.partselect.com/Dishwasher-Insulation.htm", "https://www.partselect.com/Dishwasher-Knobs.htm", "https://www.partselect.com/Dishwasher-Wire-Plugs-and-Connectors.htm", "https://www.partselect.com/Dishwasher-Transmissions-and-Clutches.htm", "https://www.partselect.com/Dishwasher-Ducts-and-Vents.htm", "https://www.partselect.com/Dishwasher-Timers.htm", "https://www.partselect.com/Dishwasher-Legs-and-Feet.htm", "https://www.partselect.com/Dishwasher-Doors.htm", "https://www.partselect.com/Dishwasher-Trim.htm", "https://www.partselect.com/Dishwasher-Manuals-and-Literature.htm", "https://www.partselect.com/Dishwasher-Attachments-and-Accessories.htm",
