@@ -45,15 +45,15 @@
 .user-message {
   align-self: flex-end;
   font-size: 13px;
-  background-color: #1b3875;
-  color: #ffffff;
+  background-color: #ffe04f;
+  color: #000000;
   border-top-right-radius: 0;
   text-align: left;
 }
 
 .assistant-message {
   align-self: flex-start;
-  background-color: #f6f6f6;
+  background-color: #f3c04c;
   border-top-left-radius: 0;
   color: #000000;
   padding: 14px;
