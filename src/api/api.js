@@ -1,6 +1,6 @@
 export const getAIMessage = async (userQuery) => {
   try {
-    const response = await fetch("http://localhost:8000/api/ask", {
+    const response = await fetch("https://ai-chat-agent-partselect-1.onrender.com/api/ask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
