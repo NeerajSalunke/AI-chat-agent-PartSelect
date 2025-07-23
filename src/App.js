@@ -9,7 +9,7 @@ function App() {
       <header className="hero-header">
         <div className="hero-content">
 
-          <p className="title"><FiZap className="hero-icon" />AI Assistant for Appliance Parts</p>
+          <p className="title"><FiZap className="hero-icon" />HomeFix AI: Find & Fix Appliance Issues Fast</p>
           <p className="subtitle">
             Simply ask “What does part number PS11752778 do?” “Is this compatible with my Whirlpool fridge?” “Why is my fridge warm?”
           </p>
