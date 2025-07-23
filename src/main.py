@@ -10,6 +10,9 @@ import re
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 from langchain_core.messages import get_buffer_string
+from cachetools import TTLCache
+from fastapi import FastAPI, Request, Header
+from uuid import uuid4
 
 
 
@@ -22,10 +25,18 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://ai-chat-agent-partselect-1.onrender.com"],
+    # allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+memory_cache = TTLCache(maxsize=1000, ttl=600)
+
+def get_memory_for_user(session_id: str):
+    if session_id not in memory_cache:
+        memory_cache[session_id] = ConversationBufferMemory(return_messages=True)
+    return memory_cache[session_id]
 
 class UserQuery(BaseModel):
     query: str
@@ -37,12 +48,19 @@ collection = chroma_client.get_collection(name="partselect_parts", embedding_fun
 
 #  deepseek api key
 client = OpenAI(api_key=deepseek_api_key, base_url="https://api.deepseek.com")
-memory = ConversationBufferMemory(return_messages=True)
+# memory = ConversationBufferMemory(return_messages=True)
 
 
 
 @app.post("/api/ask")
-async def ask_question(user_query: UserQuery):
+async def ask_question(user_query: UserQuery, session_id: str = Header(default=None)):
+    if not session_id:
+        session_id = str(uuid4())
+        print("generated new")
+
+    memory = get_memory_for_user(session_id)
+    print("session id:",session_id)
+
     query = user_query.query
     part_number_match = re.search(r'\b[A-Z]{2,5}\d{5,}\b', query, re.IGNORECASE)
 
@@ -92,6 +110,9 @@ async def ask_question(user_query: UserQuery):
     3. "What symptoms does this part fix?"
     Do not suggest questions that cannot be answered from the given parts data or that require live customer support.
 
+    If listing steps or features, use bullet points (- or •) without excessive spacing.
+    Avoid inserting more than one blank line between sections.
+
     If user asks about return policy, inform them that they can return the part within 365 days of purchase. Parts should be in re-sellable condition. Please allow 7-10 business days for the return to be processed.
 
     If user asks about warranty, inform them that they can get a 1-year warranty on the part.
@@ -127,4 +148,4 @@ async def ask_question(user_query: UserQuery):
     answer = response.choices[0].message.content.strip()
     memory.chat_memory.add_ai_message(answer)
     # print(answer)
-    return {"role": "assistant", "content": answer}
+    return {"role": "assistant", "content": answer, "session_id": session_id}

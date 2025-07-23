@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import "./ChatWindow.css";
 import { getAIMessage } from "../api/api";
 import { marked } from "marked";
+import { FiSend } from "react-icons/fi";
 
 function ChatWindow() {
 
@@ -49,19 +50,20 @@ function ChatWindow() {
           <div ref={messagesEndRef} />
           <div className="input-area">
             <input
+              type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type a message..."
-              onKeyPress={(e) => {
+              placeholder="Ask about a part..."
+              onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   handleSend(input);
                   e.preventDefault();
                 }
               }}
-              rows="3"
+              
             />
-            <button className="send-button" onClick={() => handleSend(input)}>
-              Send
+            <button onClick={handleSend} title="Send message">
+              <FiSend size={18} />
             </button>
           </div>
       </div>
