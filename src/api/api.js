@@ -7,7 +7,7 @@ if (!sessionId) {
 export const getAIMessage = async (userQuery) => {
   try {
     // const response = await fetch("http://localhost:8000/api/ask", {
-    const response = await fetch("https://ai-chat-agent-partselect-1-backend.onrender.com/api/ask", {
+      const response = await fetch("https://ai-chat-agent-partselect-1-backend.onrender.com/api/ask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,8 +17,8 @@ export const getAIMessage = async (userQuery) => {
     });
 
     const data = await response.json();
-    console.log(data);
-    console.log(data.content);
+    // console.log(data);
+    // console.log(data.content);
 
     return {
       role: "assistant",

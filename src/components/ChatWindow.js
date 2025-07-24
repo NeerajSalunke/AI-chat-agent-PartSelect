@@ -13,6 +13,7 @@ function ChatWindow() {
 
   const [messages,setMessages] = useState(defaultMessage)
   const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const messagesEndRef = useRef(null);
 
@@ -25,6 +26,7 @@ function ChatWindow() {
   }, [messages]);
 
   const handleSend = async (input) => {
+    setLoading(true);
     if (input.trim() !== "") {
      
       setMessages(prevMessages => [...prevMessages, { role: "user", content: input }]);
@@ -34,6 +36,7 @@ function ChatWindow() {
       const newMessage = await getAIMessage(input);
       setMessages(prevMessages => [...prevMessages, newMessage]);
     }
+    setLoading(false);
   };
 
   return (
@@ -53,17 +56,23 @@ function ChatWindow() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about a part..."
+              placeholder={loading ? "Thinking..." : "Ask about a part..."}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   handleSend(input);
                   e.preventDefault();
                 }
               }}
-              
+              disabled={loading} 
             />
-            <button onClick={handleSend} title="Send message">
-              <FiSend size={18} />
+            <button onClick={handleSend} title="Send message" disabled={loading}>
+              {
+                loading ? (
+                  <div className="spinner"/>
+                ) : (
+                  <FiSend size={18} />
+                )
+              }
             </button>
           </div>
       </div>
